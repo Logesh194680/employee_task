@@ -1,0 +1,26 @@
+const express = require('express');
+const router = express.Router();
+const {
+  getEmployees,
+  getEmployeeById,
+  createEmployee,
+  updateEmployee,
+  deleteEmployee,
+  getAnalytics,
+} = require('../controllers/employeeController');
+const { protect } = require('../middleware/auth');
+
+router.use(protect);
+
+router.get('/analytics', getAnalytics);
+
+router.route('/')
+  .get(getEmployees)
+  .post(createEmployee);
+
+router.route('/:id')
+  .get(getEmployeeById)
+  .put(updateEmployee)
+  .delete(deleteEmployee);
+
+module.exports = router;
